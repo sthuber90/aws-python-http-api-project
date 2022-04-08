@@ -1,0 +1,20 @@
+service: aws-python-http-api-project
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: python3.8
+  architecture: arm64
+
+functions:
+  hello:
+    handler: handler.lambda_handler
+    layers:
+      - arn:aws:lambda:${aws:region}:017000801446:layer:AWSLambdaPowertoolsPython:16
+    events:
+      - httpApi:
+          path: /pets/{name}
+          method: get
+      - httpApi:
+          path: /pets/{name}/vets
+          method: get
